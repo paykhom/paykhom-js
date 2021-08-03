@@ -1068,7 +1068,7 @@ class Component extends Class {
         const elList = document.querySelectorAll(selector);
 
         for (let i = 0; i < elList.length; i++) {
-        	elList[i].addEventListener(eventName, (eventArg) => await handlerMethod.call(me, eventArg));
+        	elList[i].addEventListener(eventName, (eventArg) => await handlerMethod.call(me, eventArg);
         }
     }
 
