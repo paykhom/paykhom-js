@@ -1063,6 +1063,28 @@ class Component extends Class {
 		delete this.elements[name];
 	}
 
+    on (selector, eventName, handlerMethod) {
+		var me = this.me; //Tricky! Very Tricky!!
+        const elList = document.querySelectorAll(selector);
+
+        for (let i = 0; i < elList.length; i++) {
+        	elList[i].addEventListener(eventName, (eventArg) => await handlerMethod.call(me, eventArg));
+        }
+    }
+
+    off (selector, eventName, eventHandler, useCapture) {
+        var element = document.querySelectorAll(selector);
+        Array.prototype.forEach.call(element, function(el) {
+            el.removeEventListener(eventName, eventHandler, useCapture);
+        });
+    }
+
+    offOn(selector, eventName, eventHandler, useCapture) {
+        this.off(selector, eventName, eventHandler, useCapture);
+        this.on(selector, eventName, eventHandler);
+    }
+
+
 }
 
 class Composite extends Component {
