@@ -85,10 +85,9 @@ class WebElementTrait extends Class {
 
 
 
-
 }
 
-class WebElement extends Mixin (HTMLElement, WebElementTrait, Ygte) {
+class WebElement extends Mixin (HTMLElement, WebElementTrait /*, Ygte*/) {
 	constructor () {
 		super ();
 		this.el = {};
@@ -98,6 +97,37 @@ class WebElement extends Mixin (HTMLElement, WebElementTrait, Ygte) {
 	uponReady () {
 		super.uponReady ();
 	}
+
+    on (selector, eventName, handlerMethod) {
+		var me = this.me; //Tricky! Very Tricky!!
+        const elList = document.querySelectorAll(selector);
+
+        /*
+        for (let i = 0; i < elList.length; i++) {
+        	elList[i].addEventListener(eventName, handlerMethod.call(me, eventArg);
+        }
+        */
+        
+        Array.prototype.forEach.call(elList, function(el) {
+			el.addEventListener (eventName, /*async*/ function (eventArg) {
+				/*await*/ handlerMethod.call (me, eventArg);
+			});	
+
+        });
+
+    }
+
+    off (selector, eventName, eventHandler, useCapture) {
+        var element = document.querySelectorAll(selector);
+        Array.prototype.forEach.call(element, function(el) {
+            el.removeEventListener(eventName, eventHandler, useCapture);
+        });
+    }
+
+    offOn(selector, eventName, eventHandler, useCapture) {
+        this.off(selector, eventName, eventHandler, useCapture);
+        this.on(selector, eventName, eventHandler);
+    }
 
 	addEventHandler (el, ev, /*instance,*/ handler, self = this) {
 		if (el instanceof Array) {
