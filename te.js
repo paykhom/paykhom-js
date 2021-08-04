@@ -369,9 +369,9 @@ class Ygte extends Class {
 		super ();
 	}
 
-	renderTemplate (templateGenerator, model = null) {
+	render (template, model = null) {
 		let accumulator = '';
-		for (let c of templateGenerator.call (this, model)) {
+		for (let c of template.render(model)) {
 			accumulator += c;
 		}
 		return accumulator;
