@@ -1067,12 +1067,6 @@ class Component extends Class {
 		var me = this.me; //Tricky! Very Tricky!!
         const elList = document.querySelectorAll(selector);
 
-        /*
-        for (let i = 0; i < elList.length; i++) {
-        	elList[i].addEventListener(eventName, handlerMethod.call(me, eventArg);
-        }
-        */
-        
         Array.prototype.forEach.call(elList, function(el) {
             el.addEventListener(eventName, eventHandler);
         });
