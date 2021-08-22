@@ -102,13 +102,13 @@ class WebElement extends Mixin (HTMLElement, WebElementTrait /*, Ygte*/) {
     on (selector, eventName, handlerMethod) {
 		var me = this; //Tricky! Very Tricky!!
         const elList = document.querySelectorAll(selector);
-
+	
         /*
         for (let i = 0; i < elList.length; i++) {
         	elList[i].addEventListener(eventName, handlerMethod.call(me, eventArg);
         }
         */
-        
+      
         Array.prototype.forEach.call(elList, function(el) {
 			el.addEventListener (eventName, /*async*/ function (eventArg) {
 				/*await*/ handlerMethod.call (me, eventArg);
@@ -120,6 +120,7 @@ class WebElement extends Mixin (HTMLElement, WebElementTrait /*, Ygte*/) {
 
     off (selector, eventName, eventHandler, useCapture) {
         var element = document.querySelectorAll(selector);
+
         Array.prototype.forEach.call(element, function(el) {
             el.removeEventListener(eventName, eventHandler, useCapture);
         });
