@@ -91,6 +91,7 @@ class WebElement extends Mixin (HTMLElement, WebElementTrait /*, Ygte*/) {
 	constructor () {
 		super ();
 		this.el = {};
+		this.state = {};
 		//this.initialize ();
 	}
 
@@ -99,7 +100,7 @@ class WebElement extends Mixin (HTMLElement, WebElementTrait /*, Ygte*/) {
 	}
 
     on (selector, eventName, handlerMethod) {
-		var me = this.me; //Tricky! Very Tricky!!
+		var me = this; //Tricky! Very Tricky!!
         const elList = document.querySelectorAll(selector);
 
         /*
