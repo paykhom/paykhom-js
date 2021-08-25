@@ -777,7 +777,7 @@ class WebQuoteElement extends Mixin (HTMLQuoteElement, WebElementTrait, Ygte) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-class WebElementary extends Class {
+class WebElementary extends Component {
 	constructor () {
 		super ();
 	}
@@ -948,43 +948,43 @@ class WebElementary extends Class {
 		});
 	}
 
-	resetErrorView (formSelector) {
-		//for (const [k, v] of Object.entries (formError)) {
-		$ (formSelector).find ("[data-validation]").each (function () {
-			var $field = $ (this);
+	// resetErrorView (formSelector) {
+	// 	//for (const [k, v] of Object.entries (formError)) {
+	// 	$ (formSelector).find ("[data-validation]").each (function () {
+	// 		var $field = $ (this);
 
-			$ ("#"+$field.attr ("id")+"_error").attr ("data-content", "");
-			//$field.removeClass ("alert-warning");
+	// 		$ ("#"+$field.attr ("id")+"_error").attr ("data-content", "");
+	// 		//$field.removeClass ("alert-warning");
 
-			// Added By Istiyak
-			$ ("#"+$field.attr ("id")+"_error").addClass ("d-none");
-			$field.removeClass ("is-invalid");
+	// 		// Added By Istiyak
+	// 		$ ("#"+$field.attr ("id")+"_error").addClass ("d-none");
+	// 		$field.removeClass ("is-invalid");
 			
 
-		});
-	}
+	// 	});
+	// }
 
-	renderErrorView (formError) {
-		for (const [k, v] of Object.entries (formError)) {
-			var l = "<ul>";
-			for (var i = 0; i < v.length; i++) {
-				l += "<li>" + formError[k][i] + "</li>";
-			}
-			l += "</ul>";
-			let labelId = $ ("#" + k + "_error").attr ("data-content", l);
-			// $ ("#" + k + "_error").addClass ("alert-warning");
+	// renderErrorView (formError) {
+	// 	for (const [k, v] of Object.entries (formError)) {
+	// 		var l = "<ul>";
+	// 		for (var i = 0; i < v.length; i++) {
+	// 			l += "<li>" + formError[k][i] + "</li>";
+	// 		}
+	// 		l += "</ul>";
+	// 		let labelId = $ ("#" + k + "_error").attr ("data-content", l);
+	// 		// $ ("#" + k + "_error").addClass ("alert-warning");
 
-			// Added By Istiyak
-			$ ("#" + k + "_error").removeClass ("d-none");
-			$ ("#" + k).addClass ("is-invalid");
-		}
+	// 		// Added By Istiyak
+	// 		$ ("#" + k + "_error").removeClass ("d-none");
+	// 		$ ("#" + k).addClass ("is-invalid");
+	// 	}
 
-		return this;
-	}
+	// 	return this;
+	// }
 
-	validate (formSelector, formError) {
-		return app.locateService (FormValidator).validate (formSelector, formError);
-	}
+	// validate (formSelector, formError) {
+	// 	return app.locateService (FormValidator).validate (formSelector, formError);
+	// }
 		
 }
 

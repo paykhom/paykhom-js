@@ -1064,17 +1064,27 @@ class Component extends Class {
 	}
 
     on (selector, eventName, handlerMethod) {
-		var me = this.me; //Tricky! Very Tricky!!
+		var me = this; //Tricky! Very Tricky!!
         const elList = document.querySelectorAll(selector);
-
+	
+        /*
+        for (let i = 0; i < elList.length; i++) {
+        	elList[i].addEventListener(eventName, handlerMethod.call(me, eventArg);
+        }
+        */
+      
         Array.prototype.forEach.call(elList, function(el) {
-            el.addEventListener(eventName, eventHandler);
+			el.addEventListener (eventName, /*async*/ function (eventArg) {
+				/*await*/ handlerMethod.call (me, eventArg);
+			});	
+
         });
 
     }
 
     off (selector, eventName, eventHandler, useCapture) {
         var element = document.querySelectorAll(selector);
+
         Array.prototype.forEach.call(element, function(el) {
             el.removeEventListener(eventName, eventHandler, useCapture);
         });
@@ -1084,6 +1094,115 @@ class Component extends Class {
         this.off(selector, eventName, eventHandler, useCapture);
         this.on(selector, eventName, eventHandler);
     }
+
+    // on (selector, eventName, handlerMethod) {
+	// 	var me = this.me; //Tricky! Very Tricky!!
+    //     const elList = document.querySelectorAll(selector);
+
+    //     Array.prototype.forEach.call(elList, function(el) {
+    //         el.addEventListener(eventName, eventHandler);
+    //     });
+
+    // }
+    // off (selector, eventName, eventHandler, useCapture) {
+    //     var element = document.querySelectorAll(selector);
+    //     Array.prototype.forEach.call(element, function(el) {
+    //         el.removeEventListener(eventName, eventHandler, useCapture);
+    //     });
+    // }
+
+    // offOn(selector, eventName, eventHandler, useCapture) {
+    //     this.off(selector, eventName, eventHandler, useCapture);
+    //     this.on(selector, eventName, eventHandler);
+    // }
+    // resetErrorView (formSelector) {
+	// 	//for (const [k, v] of Object.entries (formError)) {
+	// 	$ (formSelector).find ("[data-validation]").each (function () {
+	// 		var $field = $ (this);
+
+	// 		$ ("#"+$field.attr ("id")+"_error").attr ("data-content", "");
+	// 		//$field.removeClass ("alert-warning");
+
+	// 		// Added By Istiyak
+	// 		$ ("#"+$field.attr ("id")+"_error").addClass ("d-none");
+	// 		$field.removeClass ("is-invalid");
+			
+
+	// 	});
+	// }
+
+	// renderErrorView (formError) {
+	// 	for (const [k, v] of Object.entries (formError)) {
+	// 		var l = "<ul>";
+	// 		for (var i = 0; i < v.length; i++) {
+	// 			l += "<li>" + formError[k][i] + "</li>";
+	// 		}
+	// 		l += "</ul>";
+	// 		let labelId = $ ("#" + k + "_error").attr ("data-content", l);
+	// 		// $ ("#" + k + "_error").addClass ("alert-warning");
+
+	// 		// Added By Istiyak
+	// 		$ ("#" + k + "_error").removeClass ("d-none");
+	// 		$ ("#" + k).addClass ("is-invalid");
+	// 	}
+
+	// 	return this;
+	// }
+
+
+	// validate (formSelector, formError) {
+	// 	return app.locateService (FormValidator).validate (formSelector, formError);
+	// }
+
+
+    ////// TODO  needs refactoring
+    validate (formSelector, formError) {
+		return app.locateService (FormValidator).validate (formSelector, formError);
+	}
+
+
+	resetErrorView (formSelector) {
+		//for (const [k, v] of Object.entries (formError)) {
+		$ (formSelector).find ("[data-validation]").each (function () {
+			var $field = $ (this);
+
+			$ ("#"+$field.attr ("id")+"_error").attr ("data-content", "");
+			$field.removeClass ("alert-warning");
+
+			// Added By Istiyak
+			$ ("#"+$field.attr ("id")+"_error").addClass ("hidden");
+			$field.removeClass ("is-invalid");
+			
+
+		});
+	}
+
+	renderErrorView (formError) {
+        let c = 0
+        for (const [k, v] of Object.entries (formError)) {
+			var l = "<ul class='list-disc text-left pl-10'>";
+			for (var i = 0; i < v.length; i++) {
+				l += "<li>" + formError[k][i] + "</li>";
+			}
+			l += "</ul>";
+			//let labelId = $ ("#" + k + "_error").attr ("data-content", l);
+			// $ ("#" + k + "_error").addClass ("alert-warning");
+
+			// Added By Istiyak
+            //let element = 
+            if(document.getElementById(`${k}_label`).children[0].children[0].children[2]){
+                
+            }else{
+			document.getElementById(`${k}_label`).children[0].children[0].children[1].insertAdjacentHTML("afterend" , l)}
+			//$ ("#" + k).addClass ("is-invalid");
+      //$ ("#" + k).addClass ("is-invalid");
+       
+      
+		}
+
+		return this;
+	}
+
 
 
 }
